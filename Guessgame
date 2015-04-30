@@ -1,0 +1,184 @@
+import java.io.BufferedReader; 
+import java.io.File;  
+import java.io.IOException;  
+import java.io.InputStreamReader; 
+import java.io.RandomAccessFile; 
+
+public class Guessgame {
+	int i = 0;// 记录猜数字的次数
+	 
+	  
+	void operate()  
+	{  
+	System.out.println("欢迎来到开发的猜数字小游戏" + 
+			"\n"+"输入“enter”进入游戏;" + 
+	 "\n" + "输入“exit”退出游戏;" + 	 
+	"\n"+ "输入“record”最新的游戏记录;" +	 
+	"\n" + "输入“answer”显示该次游戏的正确答案;" +  "\n"+ "输入“clear”清除记录"+"\n"); 
+	System.out.println("请选择上面的选项：");
+	}
+	void playGame(int number)  
+	{  
+//	 int number = (int) (Math.random() * 100);  
+	System.out.println("游戏开始，请猜数，输入0-100之间的一个数："); 
+	InputStreamReader isr = new InputStreamReader(System.in); 
+	BufferedReader br = new BufferedReader(isr); 
+	String str = "";  
+	 
+	int n;  
+	RandomAccessFile raf = null; 
+	try
+	  
+	{  
+	while(br != null&& !str.equals("exit"))  
+	{  
+	str = br.readLine(); 
+	n = Integer.parseInt(str);
+	i++;// i记录输入数字的次数}} 
+	if
+	 (n < number) {  
+	System.out.println("你猜的数字偏小"); 
+//	 break; 
+	}  
+	 
+	else if(n > number) {  
+	System.out.println("你猜的数字偏大"); 
+//	 break; 
+	 
+	}  
+	 
+	else if(n == number) 
+	{  
+	System.out.println("恭喜你，猜对啦！"); 
+    System.out.println("你输入了" + i + "次"); 
+	  
+	File f = 
+	new
+	 File("d:\\RandomAccessFile.txt"); 
+	raf = new RandomAccessFile(f, "rw"); 
+//	 raf.seek(0);  
+//	 while(f.length()!=  
+	raf.setLength(0);// 写之前先将文件清空
+	raf.writeInt(i);// 输入数字的次数写入文件
+	 
+	  
+	raf.seek(0);// 定位到文件头
+	  
+//	 raf.seek(raf.length()-1);//定位到文件尾
+	  
+	System.out.println("最新的游戏记录:" + raf.readInt() + "次");
+	// 打印最新的猜数字记录
+	  
+	System.
+	exit(0); 
+	} 
+	 
+	} 
+	 
+	}  
+	 
+	catch(IOException e) 
+	{  
+//	 TODOAuto-generated catch block 
+	e.printStackTrace(); 
+	}   
+	finally  { 
+	try
+	 {  
+	if(raf != null) 
+	raf.close(); 
+	}   
+	catch (IOException e)  
+	{  
+//	 TODOAuto-generated catch block 
+	e.printStackTrace(); 
+	} 
+	} 
+	 
+	} 
+	  
+	public static void main(String[] args)  
+	{  
+	int number = (int) (Math.random() * 100); 
+	  
+	Guessgame r = new Guessgame(); 
+	r.operate();  
+	InputStreamReader isr = new InputStreamReader(System.in);  
+	BufferedReader br = new BufferedReader(isr); 
+		String s = ""; 
+		try
+		 
+		{  
+		while(s != null) 
+		{ 
+		  
+		s = br.readLine();  
+		if(s.equals("enter"))// 输入“enter”进入游戏; 
+		r.playGame(number);  
+		else if (s.equals("exit"))// 输入“exit”退出游戏; 
+		System.exit(0);  
+		else if(s.equals("record"))//输入“record”打印最新的猜数字记录
+		;  
+		{  
+		File f = new File("d:\\RandomAccessFile.txt");  
+		RandomAccessFile raf = new RandomAccessFile(f, "rw"); 
+		  
+		if
+		 (raf.length() > 0)// 如果文件中有记录，则输出此数，否则显示“记录空”的提示
+		  
+		{  
+		int i = raf.readInt();  
+		System.out.println("最新的猜数字记录: " + i + "次"); 
+		}  
+		else
+		  
+		System.out.println("无记录"); 
+		}   
+	      
+		if(s.equals("answer")) {// 输入“answer”显示该次游戏的正确答案;  
+		System.out.println("该次游戏的正确答案: " + number); 
+		r.playGame(number);// 进入游戏
+		 
+		}   
+		else if (s.equals("clear")) 
+		{  
+//			 输入“clear”清除记录
+		  
+			  
+			File f = new File("d:\\RandomAccessFile.txt");  
+			RandomAccessFile raf = 
+			new
+			 RandomAccessFile(f, "rw"); 
+//			 raf.seek(0); 
+			  
+			raf.setLength(0);// 写之前先将文件清空
+			 
+//			 raf.writeInt(i);// 输入数字的次数写入文件
+//			 raf.seek(0);// 定位到文件头 
+			  
+			System.out.println("记录已被清空");// 打印最新的猜数字记录 
+			} 
+			} 
+			}  
+			 
+			catch(IOException e) {  
+//			 TODOAuto-generated catch block 
+			e.printStackTrace(); 
+			}  
+			 
+			finally{ 
+			  
+			try {  
+			if(br != null) br.close(); 
+			}  
+			 
+			catch
+			 (IOException e) {  
+//			 TODOAuto-generated catch block 
+			e.printStackTrace(); 
+			} 
+			} 
+			 
+			}  
+			}
+
